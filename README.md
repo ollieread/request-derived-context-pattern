@@ -1,5 +1,8 @@
 # Request Scoped Context Pattern
 
+> [!WARNING]
+> This pattern is still in development and may change in the future.
+
 This is a formalisation of a well-known architectural concern in web applications, where each request has a unique 
 context that the application requires to function.
 
