@@ -1,18 +1,18 @@
-# Request Scoped Context Pattern
+# Request-derived Context Pattern
 
 > [!WARNING]
 > This pattern is still in development and may change in the future.
 
-This is a formalisation of a well-known architectural concern in web applications, where each request has a unique 
-context that the application requires to function.
+This is a formalisation of a well-known architectural concern in web applications, where context is scoped to the 
+current request but also derived from it.
 
 ---
 
 ## Overview
 
-The **Request Scoped Context** pattern defines a consistent approach to extracting, resolving, and providing access to
+The **Request-derived Context** pattern defines a consistent approach to extracting, resolving, and providing access to
 contextual information that is derived from the current request.
-This commonly includes information such as the current user, the current tenant, or the locale.
+Things like **user context** or **tenant context** are common examples of this pattern in action.
 
 This repository documents the pattern and its component concepts, including real-world examples and implementations, 
 and sub-patterns.
