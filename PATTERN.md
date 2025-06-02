@@ -63,6 +63,29 @@ within an application that ostensibly requires the same functionality, whether e
 
 ## Force
 
+There are several forces at play that make this pattern necessary:
+
+- **Statelessness** <br/>
+  Each HTTP request is handled in isolation; therefore, it is without shared memory or persistent context.
+  This means the context must be derived from the request itself.
+- **Early Context Requirements** <br/>
+  Core decisions at both the application and domain level will often depend on context, which means it must be 
+  resolved early on, so the request can be processed correctly.
+- **Diverse Context Sources** <br/>
+  Contextual information max exist in a wide variety of formats and locations (e.g., headers, paths, cookies), 
+  sometimes simultaneously.
+  The pattern must accommodate this, allowing for multiple extraction strategies.
+- **Varying Resolution Complexity** <br/>
+  Just like how the context sources can vary, so too can the complexity of resolving the context.
+  Some context sources may be direct and can be exchanged for a value without processing (e.g. tenant slug in the 
+  URL, or locale in a header).
+  Others may be indirect and require additional processing (e.g. user ID in a JWT, or tenant ID in a cookie).
+  The pattern must also accommodate this, allowing for different resolution strategies.
+- **Separation of Concerns** <br/>
+  Mixing extraction and resolution logic with the business logic of the application leads to tight coupling, poor 
+  testability, and reduced clarity.
+  Likewise, though to a less extent, mixing the resolution logic and the extraction logic can lead to similar issues.
+
 ## Solution
 
 ## Structure
