@@ -14,8 +14,8 @@ Request-derived Context.
 
 ## Intent
 
-The **Request-derived Context** pattern defines a consistent and structured approach to resolving contextual information
-from an HTTP request, such as a tenant or user, and making it available for the lifetime of the request.
+To define a consistent and structured approach to resolving contextual information from an HTTP request, such as a
+tenant or user, and making it available for the duration of the requests' lifetime.
 It defines a clear separation of concerns for extracting, resolving, and accessing the contextual data, creating a clean
 and maintainable architecture that will function regardless of what exactly the context is.
 
@@ -40,7 +40,7 @@ All request-derived context is request context, but not all request context is r
 
 Modern web applications often rely on contextual information, and because of how the HTTP request/response model works,
 there is no guarantee that the context will be relevant for more than the current request.
-The context could be anything, such as the identity of the user making the request, the tenant on whose behalf the 
+The context could be anything, such as the identity of the user making the request, the tenant on whose behalf the
 request is made, or the region or language the request is being made in.
 It could also possibly be required across multiple requests, with each request possibly manipulating the context.
 This is a problem because it requires state, and HTTP is a stateless protocol.
@@ -49,7 +49,7 @@ We have long since developed methods of adding state on top of HTTP, such as coo
 However, for a web application to know the state that is relevant to the current request, it needs context, bringing us
 full circle.
 While an HTTP request does not carry state or contain context, it does carry information that can be used to derive it.
-As well as allowing for arbitrary data to be passed along with the request (e.g. custom headers, query parameters, or 
+As well as allowing for arbitrary data to be passed along with the request (e.g. custom headers, query parameters, or
 cookies), which can be used in the same way.
 
 For the context to be useful, the relevant data needs to be extracted from the request, resolved to whatever its final
@@ -70,8 +70,9 @@ There are several forces at play that make this pattern necessary:
   Each HTTP request is handled in isolation; therefore, it is without shared memory or persistent context.
   This means the context must be derived from the request itself.
 - **Early Context Requirements** <br/>
-  Core decisions at both the application and domain level will often depend on context, which means it must be
+  Core decisions at both the application and domain level will often depend on context, which means it may be
   resolved early on, so the request can be processed correctly.
+  The pattern must allow for both early and late resolution of context, whether eager or lazy.
 - **Diverse Context Sources** <br/>
   Contextual information may exist in a wide variety of formats and locations (e.g. headers, paths, cookies),
   sometimes simultaneously.
