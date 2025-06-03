@@ -90,6 +90,45 @@ There are several forces at play that make this pattern necessary:
 
 ## Solution
 
+The solution is to separate the process into four distinct components, an extractor, a resolver, a store, and a manager.
+Each of these components can be composed in whatever way is appropriate, or swapped out for a different implementation,
+without impacting the application.
+This not only allows for multiple types of context to be handled, but also allows for different implementations of the
+same type, such as supporting user authentication via a JWT in a header, or via a session cookie.
+
+### Extractor
+
+The extractor is responsible for extracting a **context source** from the request if it is present.
+While implementations may be generic, each instance of an extractor should be specific to a context source.
+Take, for example, the class `HeaderExtractor`, which extracts from request headers, but requires the name of the header
+to extract from.
+If the application needs the tenant ID from a `X-Tenant-ID` header, but also an authentication token from the 
+`Authorization` header, then two separate instances would be required, one for each.
+
+While extractors must remain unaware of the context type, they may process the extracted data.
+In the above example, the `X-Tenant-ID` header contains a **direct context source**, which can be used as-is to 
+resolve the tenant context.
+The `Authorization` header, however, contains a JWT, which would be an **indirect context source**, and would need to be
+transformed into a **direct context source**, like a user ID.
+
+This is not without nuance, however. 
+Whether an extractor should perform a specific type of processing is a decision that should be made on a case-by-case
+basis, taking into consideration the separation of concern principle.
+Reading a JWT to extract a value, or even extracting a value from a server-side session would make sense, as those are
+elements that typically live within the HTTP layer of an application.
+Querying a data source, such as a database or an external service, however, would be best left to the resolver.
+
+> [!NOTE]
+> I am well aware that server-side sessions are not always backed by an in-memory data store and may rely on databases,
+> file systems, or other external services.
+> In those cases, the decision to make that part of the HTTP layer was already made, so it would not be a concern 
+> to anyone that is not particularly anal about these sorts of things.
+
+### Resolver
+
+Resolvers are responsible for taking a context source and resolving the context in its final form.
+
+
 ## Structure
 
 ## Dynamics
