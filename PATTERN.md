@@ -119,10 +119,9 @@ elements that typically live within the HTTP layer of an application.
 Querying a data source, such as a database or an external service, however, would be best left to the resolver.
 
 > [!NOTE]
-> I am well aware that server-side sessions are not always backed by an in-memory data store and may rely on databases,
+> Server-side sessions are not always backed by an in-memory data store and may rely on databases,
 > file systems, or other external services.
-> In those cases, the decision to make that part of the HTTP layer was already made, so it would not be a concern 
-> to anyone that is not particularly anal about these sorts of things.
+> In those cases, the decision to make that part of the HTTP layer was already made, so it should not be of concern.
 
 ### Resolver
 
